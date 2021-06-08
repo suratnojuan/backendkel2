@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Juan</title>
+<style>
+   *{ font-family:Verdana;
+   }
+   .title,h2,h5{
+       text-align: center;
+       font-weight: 800;
+       background:#a26fc9;
+       margin-bottom: 12px;;
+   }
+   h2{
+       margin-bottom:10px;
+       padding: 19px;
+   }
+
+   .tugas {
+     margin-left: 30px;
+     padding-top : 20px;
+     background: #c6f279;
+   }
+
+</style>
+</head>
+<body>
+<div class="title">
+<h2>Juan Suratno</h2>
+<h5>19021106072</h5>
+</div>
+<div class="tugas">
+    <div class="1">
+    Saya mengerjakan bagian php dan database dari project UAS ini.<br>
+    Sebelumnya di project front end adalah pembuatan website todolist.<br>
+    Kali ini sama, namun kita memakai back end. Kita menyimpan databasenya di MYSQL.
+    <br>
+    Awalnya kita buat dulu file index untuk memuat halaman utama project kita.<br>
+    Lalu buat databasenya di MYSQL dengan nama to_do_list. Databasenya terdiri dari sebuah tabel dengan 4 kolom, yaitu kolom id(int primary key auto increment), title (text), time(date_time current time) , dan checked(boolean)
+    <br>
+    dan hubungkan dengan php di file khusus db_conn.php .<br>
+    di dalam filenya ada variabel baru yaitu $sName = "localhost"; $uName = "root"; $pass = "";
+    $db_name="to_do_list"; . 
+    <br> Hubungkan database dengan try{
+    <br>    $conn= new PDO("mysql:host=$sName;dbname=$db_name",
+    <br>                      $uName, $pass);
+    <br>      $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    <br> dengan PDO Extension, ekstensi php agar database tidak hanya terikat dengan MYSQL saja
+    <br> tidak lupa juga menambah fungsi catch(PDEEPException $e){
+    <br> echo"Tidak Tersambung dengan basis data ". $e->getMessage();}
+    <br> untuk  jaga-jaga menangkap error dan menampilkan kalau misalnya databasenya tidak terhubung 
+    <br>
+    <br>
+    Lalu di folder app sendiri ada 3 file yaitu add, check, dan remove.
+    <br>Di file "add" untuk menambah to do list, lalu di masukkan ke database kita.
+    <br>if(empty($title)){
+        header("Location: ../index.php?mess=error");
+    <br>agar user tidak menginput data kosong, maka akan terlihat pesan error di url page, karena ada perintah get di form.
+    <br>dan di kolom todolist akan muncul "this file is required"
+    <br>$stmt = $conn->prepare("INSERT INTO todos(title) VALUE(?)");
+    <br>$res = $stmt->execute([$title]);
+    <br>if($res){
+    <br>    header("Location: ../index.php?mess=success"); 
+    <br> Untuk menginput data ke database kita, dan akan muncul pesan  ../index.php?mess=success
+    
+    <br>
+    <br>Di file "check", untuk menclick centang pada todolist kita yang sudah selesai. Sekaligus membuat id baru di databasenya.  
+    $todos = $conn->prepare("SELECT id, checked FROM todos WHERE id=?");
+    $todos->execute([$id]);
+
+    $todo = $todos->fetch();
+    $uId = $todo['id'];
+    $checked = $todo['checked'];
+
+    $uChecked = $checked ? 0 : 1;
+
+    $res = $conn->query("UPDATE todos SET checked=$uChecked WHERE id=$uId");
+
+    if($res){
+        echo $checked;
+    }else {
+        echo "error";
+    }
+    $conn = null;
+    exit();
+    <br>
+    <br>file "remove", untuk menghapus todolist baik di website maupun di database.
+    <br>$id = $_POST['id'];
+
+    if(empty($id)){
+       echo 0;
+    }else {
+        $stmt = $conn->prepare("DELETE FROM todos WHERE id=?");
+        $res = $stmt->execute([$id]);
+
+        if($res){
+            echo 1;
+        }else {
+            echo 0;
+        }
+        $conn = null;
+        exit();
+    }
+    <br>
+    <br>created: <?php echo $todo['date_time'] ?> adalah fitur untuk membuat waktu dimana todolist ditambahkan 
+    <br>Yang dihubungkan dari variabel $todo dan kolom tabel database date_time
+</div>
+</div>
+</body>
+</html>

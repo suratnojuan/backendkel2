@@ -1,0 +1,8 @@
+https://juansuratnoweb.000webhostapp.com/
+Link web uas
+
+Syalom Meneer, mner mohon maaf, website kita sudah jadi, tapi waktu di hosting, ada 1 fungsi error, yaitu untuk menambah todolist, tapi kalau mner refresh ulang
+depe halaman, depe todolist tetap tatambah, cuma dia ada ta muncul pesan error tidak bisa memuat header. Kami sudah cari semua solusi untuk errornya, tapi masih menemui jalan buntu mner.
+Untuk fungsi check dan remove todolist sudah jadi tanpa ada hambatan error lain
+Tapi kalau dibuka via PC, websitenya sudah sepenuhnya jadi mner, saya sudah sertakan mysqlnya untuk diimport ke phpmyadmin
+Terima Kasih mner.

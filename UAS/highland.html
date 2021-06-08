@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Highland</title>
+<style>
+   *{ font-family:Verdana;
+   }
+   .title,h2,h5{
+       text-align: center;
+       font-weight: 800;
+       background:#a26fc9;
+       margin-bottom: 12px;;
+   }
+   h2{
+       margin-bottom:10px;
+       padding: 19px;
+   }
+
+   .tugas {
+     margin-left: 30px;
+     padding-top : 20px;
+     background: #c6f279;
+   }
+
+</style>
+</head>
+<body>
+<div class="title">
+<h2>Highland Sirappa</h2>
+<h5>19021106061</h5>
+</div>
+<div class="tugas">
+    <div class="1">
+    Saya mengerjakan bagian javascript dan stylecss dari project UAS ini.<br>
+    di file index ada sintaks javascript untuk fungsi centang (checked) pada to_do_list yang terhubung di file app.php
+    <br> Bedanya javascript ini hanya menghapus centang di tampilan web saja
+   <br>   $.post('app/check.php', 
+       {
+           id: id
+       },
+       (data) => {
+           if(data != 'error'){
+               const h2 = $(this).next();
+               if(data === '1'){
+                   h2.removeClass('checked');
+               }else {
+                   h2.addClass('checked');
+               }
+           }
+       }
+    );
+ <br> 
+ <br> Lalu ada sintaks javascript untuk menghapus todolist yang juga terhubung dengan file add.php
+<br>$(document).ready(function(){
+    $('.remove-to-do').click(function(){
+        const id = $(this).attr('id');
+        
+        $.post("app/remove.php", 
+              {
+                  id: id
+              },
+              (data)  => {
+                 if(data){
+                     $(this).parent().hide(600);
+                 }
+              }
+        );
+    });
+    <br>
+    <br>Ada 1 file js untuk meletakkan jquerry sebagai library JavaScript yang akan mengatur interaksi antara JavaScript dengan HTML yang berjalan di sisi klien.
+    <br>Di CSS sendiri untuk memberi tampilan menarik, dan ada fungsi untuk menampilkan warna merah di form ketika kita pencet add tanpa mengisi data,
+    <br>#errorMes {
+        display: block;
+        background: #f2dede;
+        width: 95%;
+        margin: 0px auto;
+        color: rgb(139, 19, 19);
+        padding: 10px;
+        height: 35px;
+      }
+</div>
+</body>
+<footer id="footer">
+        
+    <ul class="icons">
+        <li><p>UAS PEMOGRAMAN WEB</p></li>
+        <li><p>KELOMPOK II : </p></li>
+        <li><a href="juan.html" target="_blank" ><span class="label">Juan Suratno</span></a> | 19021106072</li>
+       
+    </ul>
+    <p>Untuk info lebih lanjut, Klik dibawah : </p>
+    <p class="copyright"> 
+    <a href="https://fatek.unsrat.ac.id/informatika" target="_blank">PSTI</a>  
+    <a href="https://fatek.unsrat.ac.id/" target="_blank">FATEK</a>  | 
+    <a href ="http://unsrat.ac.id/" target="_blank"> UNSRAT</a> </br>
+    Lihat Komunitas : <a href="https://fatek.unsrat.ac.id/informatika/?page_id=278" target="_blank">UNITY</a></p>
+</footer>
+</html>
