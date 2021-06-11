@@ -3,25 +3,30 @@
 <head>
 <title>Juan</title>
 <style>
-   *{ font-family:Verdana;
+   body{ 
+    font-family:Verdana;
+    background:#a26fc9;
    }
    .title,h2,h5{
        text-align: center;
        font-weight: 800;
-       background:#a26fc9;
        margin-bottom: 12px;;
    }
    h2{
-       margin-bottom:10px;
-       padding: 19px;
+       font-style:italic;
    }
 
    .tugas {
      margin-left: 30px;
      padding-top : 20px;
+     padding-left:15px;
      background: #c6f279;
    }
-
+   p{
+    background:white;
+    font-style:italic;
+    font-size:14px;
+   }
 </style>
 </head>
 <body>
@@ -36,75 +41,60 @@
     Kali ini sama, namun kita memakai back end. Kita menyimpan databasenya di MYSQL.
     <br>
     Awalnya kita buat dulu file index untuk memuat halaman utama project kita.<br>
-    Lalu buat databasenya di MYSQL dengan nama to_do_list. Databasenya terdiri dari sebuah tabel dengan 4 kolom, yaitu kolom id(int primary key auto increment), title (text), time(date_time current time) , dan checked(boolean)
+    Lalu buat databasenya di MYSQL dengan nama to_do_list. 
+    <br>Databasenya terdiri dari sebuah tabel dengan 4 kolom, yaitu kolom id(int primary key auto increment), title 
+    (text), time(date_time current time) , dan checked(boolean)
+    <br><small>time tipe datanya datetime (current time) agar ketika todolistnya terinput menunjukkan saat yang sama ketika todolistnya terinput</small>
+    <br>lalu hubungkan dengan php di file khusus db_conn.php 
     <br>
-    dan hubungkan dengan php di file khusus db_conn.php .<br>
-    di dalam filenya ada variabel baru yaitu $sName = "localhost"; $uName = "root"; $pass = "";
-    $db_name="to_do_list"; . 
-    <br> Hubungkan database dengan try{
-    <br>    $conn= new PDO("mysql:host=$sName;dbname=$db_name",
-    <br>                      $uName, $pass);
-    <br>      $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    <img src="img/img1.jpg" alt="">
+    <br>
+    <br> Hubungkan database dengan
+    <br> <img src="img/img2.jpg" alt="">
     <br> dengan PDO Extension, ekstensi php agar database tidak hanya terikat dengan MYSQL saja
-    <br> tidak lupa juga menambah fungsi catch(PDEEPException $e){
-    <br> echo"Tidak Tersambung dengan basis data ". $e->getMessage();}
-    <br> untuk  jaga-jaga menangkap error dan menampilkan kalau misalnya databasenya tidak terhubung 
-    <br>
-    <br>
-    Lalu di folder app sendiri ada 3 file yaitu add, check, dan remove.
+    <br> tidak lupa juga menambah fungsi catch
+    <br> 
+    <br>Lalu di folder app sendiri ada 3 file yaitu add, check, dan remove.
     <br>Di file "add" untuk menambah to do list, lalu di masukkan ke database kita.
-    <br>if(empty($title)){
-        header("Location: ../index.php?mess=error");
+    <br><img src="img/img3.jpg" alt="">
     <br>agar user tidak menginput data kosong, maka akan terlihat pesan error di url page, karena ada perintah get di form.
     <br>dan di kolom todolist akan muncul "this file is required"
-    <br>$stmt = $conn->prepare("INSERT INTO todos(title) VALUE(?)");
-    <br>$res = $stmt->execute([$title]);
-    <br>if($res){
-    <br>    header("Location: ../index.php?mess=success"); 
+    <br><img src="img/img4.jpg" alt="">
     <br> Untuk menginput data ke database kita, dan akan muncul pesan  ../index.php?mess=success
     
     <br>
     <br>Di file "check", untuk menclick centang pada todolist kita yang sudah selesai. Sekaligus membuat id baru di databasenya.  
-    $todos = $conn->prepare("SELECT id, checked FROM todos WHERE id=?");
-    $todos->execute([$id]);
-
-    $todo = $todos->fetch();
-    $uId = $todo['id'];
-    $checked = $todo['checked'];
-
-    $uChecked = $checked ? 0 : 1;
-
-    $res = $conn->query("UPDATE todos SET checked=$uChecked WHERE id=$uId");
-
-    if($res){
-        echo $checked;
-    }else {
-        echo "error";
-    }
-    $conn = null;
-    exit();
+    <br><img src="img/img5.jpg" alt="">
     <br>
     <br>file "remove", untuk menghapus todolist baik di website maupun di database.
-    <br>$id = $_POST['id'];
-
-    if(empty($id)){
-       echo 0;
-    }else {
-        $stmt = $conn->prepare("DELETE FROM todos WHERE id=?");
-        $res = $stmt->execute([$id]);
-
-        if($res){
-            echo 1;
-        }else {
-            echo 0;
-        }
-        $conn = null;
-        exit();
-    }
+    <br><img src="img/img6.jpg" alt="">
     <br>
-    <br>created: <?php echo $todo['date_time'] ?> adalah fitur untuk membuat waktu dimana todolist ditambahkan 
-    <br>Yang dihubungkan dari variabel $todo dan kolom tabel database date_time
+    <br>Lalu juga ada beberapa fitur penerapan fungsi MYSQL seperti
+    <li>SELECT, INSERT INTO,UPDATE,DELETE</li>
+    <li>INSERT INTO</li>
+    <li>UPDATE</li>
+    <li>DELETE</li>
+    <br>Lalu fitur-fitur lainnya:
+    <br>
+    <br>Untuk mengurutkan todolist(berdasarkan id) dari bawah ke atas(todolist yang paling lama ditambahkan akan ada diurutan bawah).
+    <br><img src="img/img7.jpg" alt="">
+    <br>Untuk menampilkan gambar bila todolist sedang kosong.
+    <br><img src="img/img8.jpg" alt="">
+    <br>Untuk mengolah MySQL dengan fungsi-fungsi PHP, baik ketika menambah todolist, mengchecklist, maupun menghapusnya
+    <br><img src="img/img9.jpg" alt="">
+    <br>Untuk memeriksa variabelnya sudah diinput atau belum
+    <br>jika belum, maka akan terpampang pesan error di url (dari variable_GET)
+    <br>dan akan ada perubahan style sebagai peringatan pada user
+    <br><img src="img/img10.jpg" alt="">
 </div>
 </div>
 </body>
+
+<footer>
+<p>Syalom Meneer, mner mohon maaf, website kita sudah jadi, tapi waktu di hosting, ada 1 fungsi yang sedikit error, yaitu untuk menambah todolist, tapi kalau mner refresh ulang
+depe halaman, depe todolist tetap tatambah (didatabasenya juga), cuma dia ada ta muncul pesan error tidak bisa memuat header. Kami sudah cari semua solusi untuk errornya, tapi masih menemui jalan buntu mner.
+Untuk fungsi check dan remove todolist sudah jadi tanpa ada hambatan error lain
+Tapi kalau dibuka via PC, websitenya sudah sepenuhnya jadi mner, saya sudah sertakan mysqlnya untuk diimport ke phpmyadmin
+Terima Kasih mner.</p>
+</footer>
 </html>
